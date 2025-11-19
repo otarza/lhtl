@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Developer Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        },
+                        primary: {
+                            400: '#818cf8', // Indigo
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-slate-300 min-h-screen flex flex-col selection:bg-primary-500 selection:text-white">
+
+    <!-- Navigation / Header -->
+    <header class="fixed top-0 w-full z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="terminal" class="w-8 h-8 text-primary-400"></i>
+                    <span class="text-xl font-bold text-white tracking-tight">Dev<span class="text-primary-400">Roadmap</span></span>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="hidden md:block relative w-96">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-500"></i>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="Search resources (e.g., Python, Jobs, AI)..." 
+                        class="block w-full pl-10 pr-3 py-2 border border-slate-700 rounded-full leading-5 bg-slate-800 text-slate-300 placeholder-slate-500 focus:outline-none focus:bg-slate-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150 ease-in-out">
+                </div>
+
+                <a href="#bootcamp" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Start Here</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Search (Visible only on small screens) -->
+    <div class="md:hidden mt-20 px-4">
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i data-lucide="search" class="w-4 h-4 text-slate-500"></i>
+            </div>
+            <input type="text" id="mobileSearchInput" placeholder="Search resources..." 
+                class="block w-full pl-10 pr-3 py-2 border border-slate-700 rounded-lg leading-5 bg-slate-800 text-slate-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500">
+        </div>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-16 md:mt-20">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight">
+                Your Path to <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-purple-400">Software Mastery</span>
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                A curated collection of recordings, tools, and courses to take you from beginner to hired developer.
+            </p>
+        </div>
+
+        <div id="content-area" class="space-y-16">
+            <!-- Content will be injected here by JS -->
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm">Designed for Future Developers.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <div class="bg-emerald-500 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span class="font-medium">Link Copied!</span>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA CONFIGURATION ---
+        const categories = [
+            {
+                id: "bootcamp",
+                title: "5-Day Training Bootcamp",
+                description: "Watch the recordings of our intensive preparation sessions.",
+                icon: "video",
+                color: "text-red-400",
+                items: [
+                    { title: "Day 1: Foundation & Mindset", url: "https://drive.google.com/file/d/1l9pc9x3XPd2FN5B-JOzIA7bgvk27fQfP/view?usp=drive_link", badge: "Must Watch" },
+                    { title: "Day 2: Core Concepts", url: "https://drive.google.com/file/d/18Ua52zYEnTT67JyMl9kvCuCcMM0oWu65/view?usp=drive_link" },
+                    { title: "Day 3: Deep Dive", url: "https://drive.google.com/file/d/1w-XyYHcyjKC54UJ59YMAiL7Ipu8FrgJq/view?usp=drive_link" },
+                    { title: "Day 4: Practical Application", url: "https://drive.google.com/file/d/19K5d0JGyZ1AP-nsXbXdAbWfVi4pJB9_H/view?usp=drive_link" },
+                    { title: "Day 5: Coming Soon", url: null, badge: "TBA", disabled: true }
+                ]
+            },
+            {
+                id: "learning",
+                title: "Learning How to Learn",
+                description: "Master the art of studying effectively before you code.",
+                icon: "brain-circuit",
+                color: "text-pink-400",
+                items: [
+                    { title: "Learning How to Learn (Course)", url: "https://drive.google.com/drive/folders/1PcO_tEY2o2LtULafMKIdPy3KaZVeRJeG?usp=drive_link", desc: "By Barbara Oakley. Essential cognitive tools." }
+                ]
+            },
+            {
+                id: "foundations",
+                title: "Programming Foundations",
+                description: "Start here. From visual programming to Python.",
+                icon: "code-2",
+                color: "text-blue-400",
+                items: [
+                    { title: "Intro with Karel", url: "https://start.bitcamp.ge/", desc: "Gentle introduction to logic.", badge: "Beginner" },
+                    { title: "CS50P (Georgian)", url: "https://www.bitcamp.ge/courses/python", desc: "Harvard's Python course in Georgian." },
+                    { title: "CS50P (English)", url: "https://cs50.harvard.edu/python/weeks/0/", desc: "Harvard's original Python course." },
+                    { title: "CS50x (English)", url: "https://cs50.harvard.edu/x/weeks/0/", desc: "Introduction to Computer Science." },
+                    { title: "CS50x (Georgian)", url: "https://www.youtube.com/playlist?list=PLinr8mxnrkqtuPr1sTzK89_sMIliDiiZV", desc: "Video playlist in Georgian." }
+                ]
+            },
+            {
+                id: "web_db",
+                title: "Web Dev & Databases",
+                description: "Building real applications and managing data.",
+                icon: "layout",
+                color: "text-emerald-400",
+                items: [
+                    { title: "CS50 SQL (English)", url: "https://cs50.harvard.edu/sql/", desc: "Introduction to Databases." },
+                    { title: "CS50 SQL (Georgian)", url: "https://www.youtube.com/playlist?list=PLinr8mxnrkquQlFL8nuQgBUWii8J_DFAb", desc: "Video playlist in Georgian." },
+                    { title: "freeCodeCamp", url: "https://www.freecodecamp.org/learn", desc: "Interactive web development curriculum.", badge: "Interactive" },
+                    { title: "Full Stack Open", url: "https://fullstackopen.com/en/", desc: "Deep dive into modern React/Node development.", badge: "Advanced" }
+                ]
+            },
+            {
+                id: "career",
+                title: "Career & Advanced Reading",
+                description: "Get hired, negotiate salary, and sharpen your skills.",
+                icon: "briefcase",
+                color: "text-yellow-400",
+                items: [
+                    { title: "JobSearch.dev", url: "https://www.jobsearch.dev/", desc: "Developer job search strategy course." },
+                    { title: "Levels.fyi", url: "https://www.levels.fyi/", desc: "Check accurate developer salaries." },
+                    { title: "LeetCode Top 150", url: "https://leetcode.com/studyplan/top-interview-150/", desc: "Algorithm interview preparation." },
+                    { title: "Tech Roadmaps", url: "https://roadmap.sh/", desc: "Visual guides for learning paths." },
+                    { title: "Automate the Boring Stuff", url: "https://automatetheboringstuff.com/", desc: "Practical Python reading.", badge: "Book" },
+                    { title: "Eloquent JavaScript", url: "https://eloquentjavascript.net/", desc: "Deep dive JS reading.", badge: "Book" }
+                ]
+            },
+            {
+                id: "ai",
+                title: "Artificial Intelligence",
+                description: "Understand the future of technology.",
+                icon: "bot",
+                color: "text-purple-400",
+                items: [
+                    { title: "Elements of AI", url: "https://www.elementsofai.com/", desc: "Demystifying AI fundamentals." },
+                    { title: "AI for Everyone", url: "https://www.deeplearning.ai/courses/ai-for-everyone/", desc: "Non-technical intro to AI." },
+                    { title: "DeepLearning.ai", url: "https://www.deeplearning.ai/courses/", desc: "Hub for high-quality AI/ML courses." },
+                    { title: "CS50 AI", url: "https://cs50.harvard.edu/ai/weeks/0/", desc: "Intro to AI with Python." }
+                ]
+            }
+        ];
+
+        // --- RENDER LOGIC ---
+        function renderContent(filterText = '') {
+            const container = document.getElementById('content-area');
+            container.innerHTML = '';
+
+            const lowerFilter = filterText.toLowerCase();
+
+            categories.forEach(category => {
+                // Filter items inside the category
+                const filteredItems = category.items.filter(item => 
+                    item.title.toLowerCase().includes(lowerFilter) || 
+                    (item.desc && item.desc.toLowerCase().includes(lowerFilter)) ||
+                    category.title.toLowerCase().includes(lowerFilter)
+                );
+
+                if (filteredItems.length > 0) {
+                    // Create Section
+                    const section = document.createElement('section');
+                    section.className = 'scroll-mt-24';
+                    section.id = category.id;
+
+                    // Section Header
+                    const header = `
+                        <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-4">
+                            <div class="p-2 rounded-lg bg-slate-800 ${category.color}">
+                                <i data-lucide="${category.icon}" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">${category.title}</h2>
+                                <p class="text-slate-400 text-sm">${category.description}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    // Grid of Cards
+                    let grid = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
+                    
+                    filteredItems.forEach(item => {
+                        const isDisabled = item.disabled ? 'opacity-60 cursor-not-allowed' : 'card-hover cursor-pointer';
+                        const badgeHtml = item.badge ? `<span class="absolute top-3 right-3 bg-slate-700 text-white text-xs px-2 py-1 rounded-full font-medium border border-slate-600">${item.badge}</span>` : '';
+                        const descHtml = item.desc ? `<p class="text-slate-400 text-sm mb-4 line-clamp-2">${item.desc}</p>` : '<div class="mb-4"></div>';
+                        const clickAction = item.disabled ? '' : `window.open('${item.url}', '_blank')`;
+
+                        grid += `
+                            <div class="relative group bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col h-full ${isDisabled}" onclick="${clickAction}">
+                                ${badgeHtml}
+                                <div class="flex-grow">
+                                    <h3 class="text-lg font-semibold text-slate-100 mb-2 pr-6 group-hover:text-primary-400 transition-colors">${item.title}</h3>
+                                    ${descHtml}
+                                </div>
+                                
+                                <div class="flex justify-between items-center mt-4 pt-4 border-t border-slate-700/50">
+                                    <span class="text-xs font-medium text-slate-500 flex items-center gap-1 group-hover:text-slate-300 transition-colors">
+                                        ${item.disabled ? 'Coming Soon' : 'Visit Resource'}
+                                        ${!item.disabled ? '<i data-lucide="arrow-up-right" class="w-3 h-3"></i>' : ''}
+                                    </span>
+                                    ${!item.disabled ? `
+                                        <button onclick="event.stopPropagation(); copyToClipboard('${item.url}')" class="p-2 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-white transition-all active:scale-95" title="Copy Link">
+                                            <i data-lucide="copy" class="w-4 h-4"></i>
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    grid += `</div>`;
+
+                    section.innerHTML = header + grid;
+                    container.appendChild(section);
+                }
+            });
+
+            // Refresh Icons
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        // --- UTILITIES ---
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2000);
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderContent();
+
+            // Search Listener
+            const inputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
+            inputs.forEach(input => {
+                if(input) {
+                    input.addEventListener('input', (e) => {
+                        renderContent(e.target.value);
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
